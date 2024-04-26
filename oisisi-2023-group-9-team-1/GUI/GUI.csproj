@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="bin.jpeg" />
+    <None Remove="pen.jpg" />
+    <None Remove="plus.png" />
+    <None Remove="search.jpg" />
+    <None Remove="X.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CLI\CLI.csproj">
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="bin.jpeg" />
+    <Resource Include="pen.jpg" />
+    <Resource Include="plus.png" />
+    <Resource Include="search.jpg" />
+    <Resource Include="X.png" />
+  </ItemGroup>
+
+</Project>

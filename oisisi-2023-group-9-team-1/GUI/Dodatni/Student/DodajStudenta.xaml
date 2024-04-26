@@ -1,0 +1,78 @@
+﻿<Window x:Class="GUI.Dodatni.DodajStudenta"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI.Dodatni"
+        mc:Ignorable="d"
+        Height="500" Width="400"
+        Title="Dodaj Studenta"  WindowStartupLocation="CenterScreen">
+    <Grid>
+
+        <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Height="30">Ime</Label>
+            <Label Grid.Row="1" Grid.Column="0" Height="30">Prezime</Label>
+            <Label Grid.Row="2" Grid.Column="0" Height="30">Datum rodjenja</Label>
+            <Label Grid.Row="3" Grid.Column="0" Height="30">Adresa stanovanja</Label>
+            <Label Grid.Row="4" Grid.Column="0" Height="30">Kontakt telefon</Label>
+            <Label Grid.Row="5" Grid.Column="0" Height="30">E-mail adresa</Label>
+            <Label Grid.Row="6" Grid.Column="0" Height="30">Indeks</Label>
+            <Label Grid.Row="7" Grid.Column="0" Height="30">Trenutna godina studija</Label>
+            <Label Grid.Row="8" Grid.Column="0" Height="30">Status</Label>
+
+            <TextBox x:Name="TB1" Grid.Row="0" Grid.Column="1"  Height="20" Text="{Binding Path=Student.Ime, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="TB2" Grid.Row="1" Grid.Column="1"  Height="20" Text="{Binding Path=Student.Prezime, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="TB3" Grid.Row="2" Grid.Column="1"  Height="20" Text="{Binding Path=Student.DatumRodjenja, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:yyyy-MM-dd}}" TextChanged="Tb_TextChanged"></TextBox>
+
+            <ComboBox x:Name="ComboBoxSelectAdress" Grid.Row="3" Grid.Column="1" Height="20" SelectedValue="{Binding Path=SelectedAdressID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+   
+            </ComboBox>
+
+
+
+            <TextBox x:Name="TB5" Grid.Row="4" Grid.Column="1"  Height="20" Text="{Binding Path=Student.KontaktTelefon, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="TB6" Grid.Row="5" Grid.Column="1"  Height="20" Text="{Binding Path=Student.Email, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+
+            <ComboBox x:Name="ComboBoxSelectIndex" Grid.Row="6" Grid.Column="1" Height="20">
+
+            </ComboBox>
+
+            <ComboBox x:Name="CB8" Grid.Row="7" Grid.Column="1" Height="20" SelectedIndex="{Binding Path=Student.GodinaStudija, Mode=OneWayToSource}">
+                <ComboBoxItem IsSelected="True" Content="Prva"></ComboBoxItem>
+                <ComboBoxItem Content="Druga"></ComboBoxItem>
+                <ComboBoxItem Content="Treca"></ComboBoxItem>
+                <ComboBoxItem Content="Cetvrta"></ComboBoxItem>
+            </ComboBox>
+
+            <ComboBox x:Name="CB9" Grid.Row="8" Grid.Column="1" Height="20" SelectedIndex="{Binding Path=Student.StatusBinding, Mode=OneWayToSource}">
+                <ComboBoxItem IsSelected="True">Budzet</ComboBoxItem>
+                <ComboBoxItem>Samofinansiranje</ComboBoxItem>
+            </ComboBox>
+
+        </Grid>
+
+
+        <DockPanel Width="400" Height="50" VerticalAlignment="Bottom">
+            <Button  Name ="Potvrdi" Content="Potvrdi" IsCancel="True" HorizontalAlignment="Center" Margin="120,0,0,0" VerticalAlignment="Center" Width="60" Click="Add_Click"/>
+            <Button Content="Odustani" IsDefault="True"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Click="Close_Click"/>
+        </DockPanel>
+    </Grid>
+</Window>
