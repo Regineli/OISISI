@@ -17,13 +17,15 @@ using CLI.Controller;
 using CLI.Model;
 using GUI.DTO;
 using System.Collections.ObjectModel;
+using CLI.Observer;
+using System.ComponentModel;
 
 namespace GUI.Dodatni
 {
     /// <summary>
     /// Interaction logic for IzmeniStudenta.xaml
     /// </summary>
-    public partial class IzmeniStudenta : Window
+    public partial class IzmeniStudenta : Window, IObserver
     {
 
         
@@ -40,11 +42,13 @@ namespace GUI.Dodatni
         private MainWindow mainWindow;
         private int studentId;
 
-        public ObservableCollection<Ocena> Grades { get; set; }
+        public ObservableCollection<OcenaDTO> Grades { get; set; }
 
         public IzmeniStudenta(StudentDAO studentd, MainWindow mainWindow, int id, StudentController studentController, AdressController addressController, IndexController indexController)
         {
             InitializeComponent();
+            DataContext = this;
+
             this.studentDAO = studentd;
             this.mainWindow = mainWindow;
             this.studentId = id;
@@ -69,7 +73,7 @@ namespace GUI.Dodatni
                 //Tb17.Text = student.brIndexa;
                 AddComboBoxAdresses();
                 AddComboBoxIndexes();
-                LoadPolozeni();
+                Ucitaj();
 
             }
             else
@@ -204,10 +208,21 @@ namespace GUI.Dodatni
         // POLOZENI PREDMETI DEO
 
         
-        public void LoadPolozeni()
+        public void Ucitaj()
         {
-            Grades = new ObservableCollection<Ocena>(_gradeController.GetGradesByStudentID(studentId));
+            //Grades = new ObservableCollection<Ocena>(_gradeController.GetGradesByStudentID(studentId));
+            Grades = new ObservableCollection<OcenaDTO>();
+            foreach (Ocena ocena in _gradeController.GetAllGrades())
+            {
+                Grades.Add(new OcenaDTO(ocena));
+            }
+
+            
         }
 
+        private void PonistiOcenu_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

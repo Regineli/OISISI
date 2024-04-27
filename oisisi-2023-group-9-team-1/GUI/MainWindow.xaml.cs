@@ -207,17 +207,15 @@ namespace GUI
             if (trenutniTab == "Profesor")
             {
                 DodajProfesora noviProf = new DodajProfesora(profesorDAO, this);
-                noviProf.Show();
-                Close();
+                noviProf.ShowDialog();
             } else if(trenutniTab == "Student")
             {
                 DodajStudenta noviStudent = new DodajStudenta(_studentController, _addressController, _indexController);
-                noviStudent.Show();
-                Close();
+                noviStudent.ShowDialog();
             } else if(trenutniTab == "Predmet")
             {
                 DodajPredmet noviStudent = new DodajPredmet(predmetDAO, this);
-                noviStudent.Show();
+                noviStudent.ShowDialog();
             }
             else
             {

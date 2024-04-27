@@ -1,4 +1,5 @@
-﻿using CLI.Storage;
+﻿using CLI.Observer;
+using CLI.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,5 +74,10 @@ namespace CLI.DAO
 		{
 			return _adrese;
 		}
-	}
+
+        internal void Subscribe(IObserver observer)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

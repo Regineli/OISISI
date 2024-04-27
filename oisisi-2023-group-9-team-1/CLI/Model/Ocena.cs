@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using CLI.Controller;
 using CLI.Model;
 using CLI.Serialization;
 using CLI.Storage;
@@ -15,36 +16,39 @@ namespace CLI
         public int StudentID { get; set; }  // ID studenta
         public int PredmetID { get; set; }  // ID predmeta koji je student polozio
 
-        public DateOnly? datumPolaganja;
+        public DateOnly datumPolaganja;
         public int ocena { get; set; }
         public int ID { get; set; }
+
+        public StudentController _studentController { get; set; }
+        public PredmetController _predmetController { get; set; }
 
         public Ocena()
         {
             studentPolozio = null;
             predmet = null;
-            datumPolaganja = null;
+            datumPolaganja = DateOnly.FromDateTime(DateTime.Now);
             ocena = 0;
+
+            _studentController = new StudentController();
+            _predmetController = new PredmetController();
         }
 
-        public Ocena(int ocena)
-        {
-            studentPolozio = null;
-            predmet = null;
-            datumPolaganja = null;
-            this.ocena = ocena;
-        }
+        
 
         public Ocena(Predmet predmet, Student student, int ocena, DateOnly datumPolaganja)
         {
             studentPolozio = student;
             this.predmet = predmet;
-            datumPolaganja = datumPolaganja;
+            this.datumPolaganja = datumPolaganja;
             this.ocena = ocena;
 
 
             StudentID = studentPolozio.ID;
             this.PredmetID = predmet.ID;
+
+            _studentController = new StudentController();
+            _predmetController = new PredmetController();
         }
 
 
@@ -72,6 +76,9 @@ namespace CLI
             PredmetID = int.Parse(values[2]);
             ID = int.Parse(values[3]);
             datumPolaganja = DateOnly.Parse(values[4]);
+
+            studentPolozio = _studentController.GetStudentByID(StudentID);
+            predmet = _predmetController.GetAdressByID(PredmetID);
         }
 
 

@@ -572,7 +572,7 @@ namespace CLI.Controller
                 ocena = int.Parse(Console.ReadLine());
             }
 
-            Ocena oc = new Ocena(ocena);
+            Ocena oc = new Ocena();
             // unosimo predmet i studenta
             oc.UnesiDatumPolaganja();
 

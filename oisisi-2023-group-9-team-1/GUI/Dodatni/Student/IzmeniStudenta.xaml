@@ -10,7 +10,11 @@
         <TabControl>
             <TabItem Header="Informacije">
                 <Grid>
-                    <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="101*"/>
+                        <ColumnDefinition Width="293*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400" Grid.ColumnSpan="2" Margin="47,28,47,28">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
@@ -64,7 +68,7 @@
                         </ComboBox>
                     </Grid>
 
-                    <DockPanel Grid.Row="10" Width="450" Height="40" VerticalAlignment="Bottom">
+                    <DockPanel Width="450" Height="40" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,0,-56,0">
                         <Button Content="Potvrdi" IsCancel="True" HorizontalAlignment="Center" Margin="120,0,0,0" VerticalAlignment="Center" Width="60" Click="Potvrdi_Click"/>
                         <Button Content="Odustani" IsDefault="True" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Click="Close_Click"/>
                     </DockPanel>
@@ -77,13 +81,13 @@
                     <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400">
                         <Button Content="Ponisti ocenu" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="20" Click="PonistiOcenu_Click" Margin="10, 0, 0, 10"/>
 
-                        <DataGrid AutoGenerateColumns="False" Name="DataGridPolozeni" Height="300"
-                            ItemsSource="{Binding Grades}"
-                            SelectedItem="{Binding SelectedGrade}">
+                        <DataGrid AutoGenerateColumns="False" x:Name="DataGridPolozeni" Height="300"
+                            ItemsSource="{Binding Grades, UpdateSourceTrigger=PropertyChanged}"
+                            SelectionMode="Single" IsReadOnly="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="*" Header="Sifra predmeta" Binding="{Binding Predmet.Sifra}" />
-                                <DataGridTextColumn Width="*" Header="Naziv predmeta" Binding="{Binding Predmet.Naziv}" />
-                                <DataGridTextColumn Width="*" Header="ESPB" Binding="{Binding Predmet.Espb}" />
+                                <DataGridTextColumn Width="*" Header="Sifra predmeta" Binding="{Binding Predmet.sifra}" />
+                                <DataGridTextColumn Width="*" Header="Naziv predmeta" Binding="{Binding Predmet.naziv}" />
+                                <DataGridTextColumn Width="*" Header="ESPB" Binding="{Binding Predmet.brESPB}" />
                                 <DataGridTextColumn Width="*" Header="Ocena" Binding="{Binding Ocena}" />
                                 <DataGridTextColumn Width="*" Header="Datum" Binding="{Binding DatumString}" />
                             </DataGrid.Columns>

@@ -41,7 +41,7 @@ namespace CLI.DAO
             return newGrade;
         }
 
-		private Ocena? GetAdresaById(int id)
+		public Ocena? GetAdresaById(int id)
 		{
 			return _grades.Find(v => v.ID == id);
 		}

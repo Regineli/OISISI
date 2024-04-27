@@ -43,6 +43,11 @@ namespace CLI.Controller
             return _grades.GetGradesByStudentID(studentId);
         }
 
+        public Ocena? GetGradeByID(int id)
+        {
+            return _grades.GetAdresaById(id);
+        }
+
         public void Subscribe(IObserver observer)
         {
             _grades.Subscribe(observer);
