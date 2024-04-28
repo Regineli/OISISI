@@ -57,6 +57,7 @@ namespace CLI.DAO
 			staraAdresa.predmeti = adresa.predmeti;
 			staraAdresa.AdresaID = adresa.AdresaID;
 			staraAdresa.ProfesorPredmetiID = adresa.ProfesorPredmetiID;
+			staraAdresa.adresa = adresa.adresa;
 
 		_storage.Save(_adrese);
 			return staraAdresa;

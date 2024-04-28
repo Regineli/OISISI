@@ -38,15 +38,17 @@
             <Label Grid.Row="7" Grid.Column="0" Height="25">Zvanje</Label>
             <Label Grid.Row="8" Grid.Column="0" Height="25">Godine staza</Label>
 
-            <TextBox x:Name="tb1" Grid.Row="0" Grid.Column="1"  Height="20" Text="{Binding Path=Profesor.Ime, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox x:Name="tb2" Grid.Row="1" Grid.Column="1"  Height="20"  Text="{Binding Path=Profesor.Prezime, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox x:Name="tb3" Grid.Row="2" Grid.Column="1"  Height="20"  Text="{Binding Path=Profesor.DatumRodjenja, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox x:Name="tb4" Grid.Row="3" Grid.Column="1"  Height="20"  Text="{Binding Path=Profesor.AdresaId, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox x:Name="tb5" Grid.Row="4" Grid.Column="1"  Height="20"  Text="{Binding Path=Profesor.Kontakt, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox x:Name="tb6" Grid.Row="5" Grid.Column="1"  Height="20"  Text="{Binding Path=Profesor.Email, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox x:Name="tb7" Grid.Row="6" Grid.Column="1" Height="20"  Text="{Binding Path=Profesor.BrojLicneKarte, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox  x:Name="tb8" Grid.Row="7" Grid.Column="1" Height="20"  Text="{Binding Path=Profesor.Zvanje, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
-            <TextBox x:Name="tb9" Grid.Row="8" Grid.Column="1" Height="20"  Text="{Binding Path=Profesor.GodineStaza, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="tb1" Grid.Row="0" Grid.Column="1"  Height="20" Text="{Binding Path=ProfesorDTO.Ime, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="tb2" Grid.Row="1" Grid.Column="1"  Height="20"  Text="{Binding Path=ProfesorDTO.Prezime, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="tb3" Grid.Row="2" Grid.Column="1"  Height="20"  Text="{Binding Path=ProfesorDTO.DatumRodjenja, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <ComboBox x:Name="ComboBoxSelectAdress" Grid.Row="3" Grid.Column="1" Height="20" IsSynchronizedWithCurrentItem="True" SelectedValue="{Binding Path=SelectedAdressID, UpdateSourceTrigger=PropertyChanged}">
+
+            </ComboBox>
+            <TextBox x:Name="tb5" Grid.Row="4" Grid.Column="1"  Height="20"  Text="{Binding Path=ProfesorDTO.Kontakt, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="tb6" Grid.Row="5" Grid.Column="1"  Height="20"  Text="{Binding Path=ProfesorDTO.Email, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="tb7" Grid.Row="6" Grid.Column="1" Height="20"  Text="{Binding Path=ProfesorDTO.BrojLicneKarte, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox  x:Name="tb8" Grid.Row="7" Grid.Column="1" Height="20"  Text="{Binding Path=ProfesorDTO.Zvanje, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
+            <TextBox x:Name="tb9" Grid.Row="8" Grid.Column="1" Height="20"  Text="{Binding Path=ProfesorDTO.GodineStaza, UpdateSourceTrigger=PropertyChanged}" TextChanged="Tb_TextChanged"></TextBox>
 
 
         </Grid>

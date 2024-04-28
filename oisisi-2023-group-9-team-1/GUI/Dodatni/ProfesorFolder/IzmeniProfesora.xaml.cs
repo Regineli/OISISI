@@ -13,24 +13,49 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CLI.Controller;
+using GUI.DTO;
+using CLI.Model;
+using System.Collections.ObjectModel;
+using CLI.Observer;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GUI.Dodatni
 {
     /// <summary>
     /// Interaction logic for IzmeniProfesora.xaml
     /// </summary>
-    public partial class IzmeniProfesora : Window
+    public partial class IzmeniProfesora : Window, IObserver, INotifyPropertyChanged
     {
         private ProfesorDAO profesoriDAO;
         private MainWindow mainWindow;
         private int profesorId;
 
+        private AdressController _addressController;
+        public AdresaDTO AdressDTO { get; set; }
+
+        private ProfesorPredmetNewController _PPController;
+        public PredmetDTO PredmetDTO { get; set; }
+
+        public ObservableCollection<PredmetDTO> ProfesorPredmeti { get; set; }
+        public PredmetDTO SelectedProfesorPredmet { get; set; }
+
         public IzmeniProfesora(ProfesorDAO profesoriDAO, MainWindow mainWindow, int profesorId)
         {
             InitializeComponent();
+            DataContext = this;
             this.profesoriDAO = profesoriDAO;
             this.mainWindow = mainWindow;
             this.profesorId = profesorId;
+            _addressController = new AdressController();
+            AdressDTO = new AdresaDTO();
+
+            _PPController = new ProfesorPredmetNewController();
+            PredmetDTO = new PredmetDTO();
+
+            ProfesorPredmeti = new ObservableCollection<PredmetDTO>();
+            AddComboBoxAdresses();
 
             Profesor profesor = profesoriDAO.GetAdresaById(profesorId);
             if (profesor != null)
@@ -39,19 +64,48 @@ namespace GUI.Dodatni
                 Tb1.Text = profesor.prezime;
                 Tb2.Text = profesor.ime;
                 Tb3.Text = profesor.datumRodjenja;
-                Tb4.Text = profesor.adresaStanovanja;
+                
                 Tb5.Text = profesor.kontaktTelefon;
                 Tb6.Text = profesor.eMailAdresa;
                 Tb7.Text = profesor.brLicneKarte;
                 Tb8.Text = profesor.zvanje;
                 Tb9.Text = profesor.godineStaza;
+                Ucitaj();
 
-                
+
             }
             else
             {
                 MessageBox.Show("Profesor sa datim ID-jem nije pronađen.");
                 this.Close();
+            }
+        }
+        public Adresa GetAdress()
+        {
+            ComboboxItem adr = new ComboboxItem();
+            adr = ComboBoxSelectAdress.SelectedItem as ComboboxItem;
+
+
+            int id = adr.Value;
+
+            return GetSelectedAdress(id);
+        }
+
+        private Adresa? GetSelectedAdress(int adrID)
+        {
+            return _addressController.GetAdressByID(adrID);
+        }
+
+        private void AddComboBoxAdresses()
+        {
+            List<Adresa> adresses = this._addressController.GetAllAdresses();
+
+            foreach (Adresa a in adresses)
+            {
+                ComboboxItem item = new ComboboxItem();
+                item.Text = a.ToOneLineString();
+                item.Value = a.ID;
+                ComboBoxSelectAdress.Items.Add(item);
             }
         }
 
@@ -64,8 +118,8 @@ namespace GUI.Dodatni
             {
                 profesor.prezime = Tb1.Text;
                 profesor.ime = Tb2.Text;
-                profesor.datumRodjenja = Tb3.Text; 
-                profesor.adresaStanovanja = Tb4.Text; 
+                profesor.datumRodjenja = Tb3.Text;
+                profesor.adresa = GetAdress();
                 profesor.kontaktTelefon = Tb5.Text;
                 profesor.eMailAdresa = Tb6.Text;
                 profesor.brLicneKarte = Tb7.Text;
@@ -85,6 +139,25 @@ namespace GUI.Dodatni
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        // PREDMETI TAB
+
+        public void Ucitaj()
+        {
+            ProfesorPredmeti.Clear();
+            foreach (Predmet p in _PPController.GetPredmetiByProfesorID(profesorId))
+            {
+                ProfesorPredmeti.Add(new PredmetDTO(p));
+            }
+            OnPropertyChanged("ProfesorPredmeti");
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

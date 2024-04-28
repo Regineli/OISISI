@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CLI.Controller;
+using CLI.Model;
 
 namespace GUI.DTO
 {
@@ -60,6 +62,15 @@ namespace GUI.DTO
                 }
             }
         }
+
+        public string AdresaString
+        {
+            get { 
+                if(Adresa != null)
+                    return Adresa.ToOneLineString();
+                return "nan";
+            }
+        }
        
         public int AdresaId
         {
@@ -73,7 +84,21 @@ namespace GUI.DTO
                 }
             }
         }
-        
+
+        private Adresa _adresa;
+        public Adresa Adresa
+        {
+            get { return _adresa; }
+            set
+            {
+                if (value != _adresa)
+                {
+                    _adresa = value;
+                    OnPropertyChanged("Adresa");
+                }
+            }
+        }
+
         public string Kontakt
         {
             get { return kontakTelefont; }
@@ -158,6 +183,7 @@ namespace GUI.DTO
             BrojLicneKarte = profesor.brLicneKarte;
             Zvanje = profesor.zvanje;
             GodineStaza = profesor.godineStaza;
+            Adresa = profesor.adresa;
         }
 
 

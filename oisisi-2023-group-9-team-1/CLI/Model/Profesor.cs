@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using CLI.Controller;
 using CLI.Model;
 using CLI.Serialization;
 using CLI.Storage;
@@ -20,6 +21,9 @@ namespace CLI
         public List<Predmet> predmeti;
         public int ID { get; set; }  /// ID od profesora, povezano je na sefa katedre i listi profesora od katedre
         public int AdresaID { get; set; }   // ID od adrese
+        public Adresa adresa { get; set; }
+
+        public AdressController _adresController { get; set; }
 
         public int ProfesorPredmetiID { get; set; }
 
@@ -27,6 +31,8 @@ namespace CLI
         {
             predmeti = new List<Predmet>();
             ID = new Random().Next();
+            _adresController = new AdressController();
+            adresa = new Adresa();
         }
 
         public int GetID()
@@ -48,6 +54,7 @@ namespace CLI
 
         public Profesor(string prezime, string ime, string dat, string konta, string email, string licna, string zvanje, string godSt, int id)
         {
+            _adresController = new AdressController();
             this.prezime = prezime;
             this.ime = ime;
             kontaktTelefon = konta;
@@ -58,10 +65,12 @@ namespace CLI
             this.datumRodjenja = dat;
             ID = id;
             predmeti = new List<Predmet>();
+            adresa = new Adresa();
         }
 
         public Profesor(string prezime, string ime, string konta, string email, string licna, string zvanje, string godSt)
         {
+            _adresController = new AdressController();
             this.prezime = prezime;
             this.ime = ime;
             //datumRodjenja = datum;
@@ -71,6 +80,7 @@ namespace CLI
             this.zvanje = zvanje;
             godineStaza = godSt;
             ID = new Random().Next();
+            adresa = new Adresa();
         }
 
         public void dodajAdresu(string adr)
@@ -125,6 +135,10 @@ namespace CLI
             ID = int.Parse(values[8]);      // zasto ne radi?
             AdresaID = int.Parse(values[9]);
             ProfesorPredmetiID = int.Parse(values[10]);
+
+            adresa = _adresController.GetAdressByID(AdresaID);
+
+
         }
 
         public override string ToString()

@@ -77,6 +77,11 @@ namespace GUI.DTO
 			}
 		}
 
+		public string SemestarString
+		{
+			get { return predSemestar.ToString(); }
+		}
+
 		public Semester Semestar
 		{
 			get { return predSemestar; }

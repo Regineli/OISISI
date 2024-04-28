@@ -105,7 +105,7 @@
                             <DataGridTextColumn Width="128" Header="Ime" Binding="{Binding Ime}"/>
                             <DataGridTextColumn Width="128" Header="Prezime" Binding="{Binding Prezime}"/>
                             <DataGridTextColumn Width="128" Header="DatumRodjenja" Binding="{Binding DatumRodjenja}"/>
-                            <DataGridTextColumn Width="128" Header="AdresaId" Binding="{Binding AdresaId}"/>
+                            <DataGridTextColumn Width="128" Header="Adresa" Binding="{Binding AdresaString}"/>
                             <DataGridTextColumn Width="128" Header="Kontakt" Binding="{Binding Kontakt}"/>
                             <DataGridTextColumn Width="128" Header="Email" Binding="{Binding Email}"/>
                             <DataGridTextColumn Width="128" Header="BrojLicneKarte" Binding="{Binding BrojLicneKarte}"/>
