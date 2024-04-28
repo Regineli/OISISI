@@ -42,7 +42,6 @@ namespace CLI.Controller
             return _addresses.UpdateVehicle(adr);
         }
 
-
         public void Subscribe(IObserver observer)
         {
             _addresses.Subscribe(observer);

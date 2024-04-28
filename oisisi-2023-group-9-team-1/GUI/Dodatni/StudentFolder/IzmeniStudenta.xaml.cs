@@ -19,30 +19,33 @@ using GUI.DTO;
 using System.Collections.ObjectModel;
 using CLI.Observer;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using GUI.Dodatni.Student;
 
 namespace GUI.Dodatni
 {
     /// <summary>
     /// Interaction logic for IzmeniStudenta.xaml
     /// </summary>
-    public partial class IzmeniStudenta : Window, IObserver
-    {
-
-        
+    public partial class IzmeniStudenta : Window, IObserver, INotifyPropertyChanged
+    {        
         private GradeController _gradeController;
         private StudentController _studentController;
         private AdressController _addressController;
         private IndexController _indexController;
 
-        public StudentDTO Student { get; set; }
-        public AdresaDTO Adress { get; set; }
-        public IndeksDTO Index { get; set; }
+        public StudentDTO StudentDTO { get; set; }
+        public AdresaDTO AdressDTO { get; set; }
+        public IndeksDTO IndexDTO { get; set; }
 
         private StudentDAO studentDAO;
         private MainWindow mainWindow;
         private int studentId;
 
-        public ObservableCollection<OcenaDTO> Grades { get; set; }
+        public ObservableCollection<OcenaDTO> PolozeniPredmeti { get; set; }
+        public ObservableCollection<OcenaDTO> NepolozeniPredmeti { get; set; }
+
+        public OcenaDTO? SelectedPolozenPredmet { get; set; }
 
         public IzmeniStudenta(StudentDAO studentd, MainWindow mainWindow, int id, StudentController studentController, AdressController addressController, IndexController indexController)
         {
@@ -53,15 +56,15 @@ namespace GUI.Dodatni
             this.mainWindow = mainWindow;
             this.studentId = id;
 
-            Student = new StudentDTO();
-            Adress = new AdresaDTO();
-            Index = new IndeksDTO();
+            StudentDTO = new StudentDTO();
+            AdressDTO = new AdresaDTO();
+            IndexDTO = new IndeksDTO();
             _addressController = addressController;
             _studentController = studentController;
             _indexController = indexController;
             _gradeController = new GradeController();
 
-            Student student = _studentController.GetStudentByID(studentId);
+            var student = _studentController.GetStudentByID(studentId);
             if (student != null)
             {
                 ime.Text = student.ime;
@@ -126,7 +129,7 @@ namespace GUI.Dodatni
                 item.Text = a.ToOneLineString();
                 item.Value = a.ID;
                 ComboBoxSelectAdress.Items.Add(item);
-                if (Student.AdresaStanovanja.ID == a.ID)
+                if (StudentDTO.AdresaStanovanja.ID == a.ID)
                 {
                     ComboBoxSelectAdress.SelectedItem = item;
                 }
@@ -171,7 +174,7 @@ namespace GUI.Dodatni
             try
             {
                 // Ažuriranje podataka studenta na osnovu unetih izmena
-                Student student = studentDAO.GetStudentByID(studentId);
+                var student = studentDAO.GetStudentByID(studentId);
                 if (student != null)
                 {
                     student.ime = ime.Text;
@@ -209,20 +212,55 @@ namespace GUI.Dodatni
 
         
         public void Ucitaj()
-        {
-            //Grades = new ObservableCollection<Ocena>(_gradeController.GetGradesByStudentID(studentId));
-            Grades = new ObservableCollection<OcenaDTO>();
-            foreach (Ocena ocena in _gradeController.GetAllGrades())
+        {                        
+            PolozeniPredmeti = new ObservableCollection<OcenaDTO>();
+            PolozeniPredmeti.Clear();
+
+            foreach (Ocena ocena in _gradeController.GetPolozeniPredmetiByStudentID(studentId))
             {
-                Grades.Add(new OcenaDTO(ocena));
+                PolozeniPredmeti.Add(new OcenaDTO(ocena));
             }
 
-            
+            OnPropertyChanged("PolozeniPredmeti");
+
+            NepolozeniPredmeti = new ObservableCollection<OcenaDTO>();
+            NepolozeniPredmeti.Clear();
+
+            foreach (Ocena ocena in _gradeController.GetNepolozeniPredmetiByStudentID(studentId))
+            {
+                NepolozeniPredmeti.Add(new OcenaDTO(ocena));
+            }
+
+            OnPropertyChanged("NepolozeniPredmeti");
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void PonistiOcenu_Click(object sender, RoutedEventArgs e)
         {
+            if(SelectedPolozenPredmet == null)
+            {
+                MessageBox.Show("Odaberite predmet koji zelite da ponistite!");
+            }
+            else
+            {
+                _gradeController.PonistiPredmet(SelectedPolozenPredmet.Id);
+                Ucitaj();
+            }
+        }
 
+        private void DodajPredmet(object sender, RoutedEventArgs e)
+        {
+            
+            DodavanjePredmetaStudentu d = new DodavanjePredmetaStudentu(studentId);
+            d.ShowDialog();
+
+            Ucitaj();
         }
     }
 }

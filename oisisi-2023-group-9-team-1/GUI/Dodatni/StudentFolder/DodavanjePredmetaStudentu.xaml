@@ -1,0 +1,32 @@
+﻿<Window x:Class="GUI.Dodatni.Student.DodavanjePredmetaStudentu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI.Dodatni.Student"
+        mc:Ignorable="d"
+        Title="Dodavanje Predmeta" Height="500" Width="400">
+    <Grid>
+        <Grid Height="400">
+            <Grid Width="400" Height="300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="38*"/>
+                </Grid.ColumnDefinitions>
+
+                <DataGrid AutoGenerateColumns="False"
+                    x:Name="GridPredmeti"
+                    ItemsSource="{Binding Predmeti, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding SelectedPredmet, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" IsReadOnly="True" Grid.ColumnSpan="2" Margin="0,-44,0,0">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Sifra" Binding="{Binding SifraPredmeta}"/>
+                        <DataGridTextColumn Width="*" Header="Naziv" Binding="{Binding Naziv}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Button Content="Dodaj Predmet" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Height="20" Click="DodajPredmet" Margin="50, 0, 0, 10"/>
+            <Button Content="Odustani" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="20" Click="Odustani" Margin="10, 0, 50, 10"/>
+        </Grid>
+    </Grid>
+</Window>

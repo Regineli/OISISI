@@ -23,6 +23,11 @@ namespace CLI.Controller
             return _grades.GetAllAdresa();
         }
 
+        public void AddGrade(Ocena grade)
+        {
+            _grades.AddGrade(grade);
+        }
+
         public Ocena AddGrade(Student student, Predmet predmet, int ocena, DateOnly datum)
         {
             return _grades.AddGrade(student, predmet, ocena, datum);
@@ -43,9 +48,24 @@ namespace CLI.Controller
             return _grades.GetGradesByStudentID(studentId);
         }
 
+        public List<Ocena>? GetPolozeniPredmetiByStudentID(int studentId)
+        {
+            return _grades.GetPolozeniPredmetiByStudentID(studentId);
+        }
+
+        public List<Ocena>? GetNepolozeniPredmetiByStudentID(int studentId)
+        {
+            return _grades.GetNepolozeniPredmetiByStudentID(studentId);
+        }
+
         public Ocena? GetGradeByID(int id)
         {
             return _grades.GetAdresaById(id);
+        }
+
+        public void PonistiPredmet(int ocenaID)
+        {
+            _grades.PonistiPredmet(ocenaID);
         }
 
         public void Subscribe(IObserver observer)

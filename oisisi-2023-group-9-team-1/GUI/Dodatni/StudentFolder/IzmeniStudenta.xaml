@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.Dodatni"
         mc:Ignorable="d"
-        Title="IzmeniStudenta" Height="500" Width="400" WindowStartupLocation="CenterScreen">
+        Title="IzmeniStudenta" Height="600" Width="500" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
+
+            <!--Student info tab-->
             <TabItem Header="Informacije">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -76,14 +78,38 @@
                 </Grid>
             </TabItem>
 
+            <!--Polozeni predmeti tab-->
             <TabItem Header="Polozeni">
                 <Grid>
                     <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400">
                         <Button Content="Ponisti ocenu" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="20" Click="PonistiOcenu_Click" Margin="10, 0, 0, 10"/>
 
                         <DataGrid AutoGenerateColumns="False" x:Name="DataGridPolozeni" Height="300"
-                            ItemsSource="{Binding Grades, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding PolozeniPredmeti, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding SelectedPolozenPredmet, UpdateSourceTrigger=PropertyChanged}"      
                             SelectionMode="Single" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Header="Sifra predmeta" Binding="{Binding Predmet.sifra}" />
+                                <DataGridTextColumn Width="*" Header="Naziv predmeta" Binding="{Binding Predmet.naziv}" />
+                                <DataGridTextColumn Width="*" Header="ESPB" Binding="{Binding Predmet.brESPB}" />
+                                <DataGridTextColumn Width="*" Header="Ocena" Binding="{Binding Ocena}" />
+                                <DataGridTextColumn Width="*" Header="Datum" Binding="{Binding DatumString}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            
+            <!--Nepolozeni predmeti tab-->
+            <TabItem Header="Nepolozeni">
+                <Grid>
+                    <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400">
+                        <Button Content="Dodaj Predmet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="20" Click="DodajPredmet" Margin="10, 0, 0, 10"/>
+
+                        <DataGrid AutoGenerateColumns="False" x:Name="DataGridNepolozeni" Height="300"
+                ItemsSource="{Binding NepolozeniPredmeti, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding SelectedNepolozenPredmet, UpdateSourceTrigger=PropertyChanged}"
+                SelectionMode="Single" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Header="Sifra predmeta" Binding="{Binding Predmet.sifra}" />
                                 <DataGridTextColumn Width="*" Header="Naziv predmeta" Binding="{Binding Predmet.naziv}" />

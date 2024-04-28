@@ -13,7 +13,6 @@ namespace CLI.DAO
 		private readonly List<Predmet>? _adrese;
 		private readonly Storage<Predmet>? _storage;
 
-
 		public PredmetDAO()
 		{
 			_storage = new Storage<Predmet>("predmet.txt");

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CLI.DAO
 {
-	internal class OcenaDAO : SubjectNotifier
+	public class OcenaDAO : SubjectNotifier
 	{
 		private readonly List<Ocena>? _grades;
 		private readonly Storage<Ocena>? _storage;
@@ -27,7 +27,25 @@ namespace CLI.DAO
 			return _grades[^1].ID + 1;
 		}
 
-		public Ocena AddGrade(Student student, Predmet predmet, int ocena, DateOnly datum)
+		public List<Ocena>? GetPolozeniPredmetiByStudentID(int id)
+		{
+			return _grades.FindAll(v => v.ocena != 5 &&  v.StudentID == id);
+		}
+
+        public List<Ocena>? GetNepolozeniPredmetiByStudentID(int id)
+        {
+            return _grades.FindAll(v => v.ocena == 5 && v.StudentID == id);
+        }
+
+		
+		public void AddGrade(Ocena o)
+		{
+			_grades.Add(o);
+			_storage.Save(_grades);
+            NotifyObservers();
+		}
+
+        public Ocena AddGrade(Student student, Predmet predmet, int ocena, DateOnly datum)
 		{
             Ocena newGrade = new Ocena();
             newGrade.ID = GenerateId();
@@ -39,6 +57,14 @@ namespace CLI.DAO
             _storage.Save(_grades);
             NotifyObservers();
             return newGrade;
+        }
+
+		public void PonistiPredmet(int ocenaID)
+		{
+			Ocena o = _grades.Find(v => v.ID == ocenaID);
+			o.ocena = 5;
+			_storage.Save(_grades);
+            NotifyObservers();
         }
 
 		public Ocena? GetAdresaById(int id)
@@ -64,7 +90,8 @@ namespace CLI.DAO
 			staraAdresa.ocena = adresa.ocena;		
 
 			_storage.Save(_grades);
-			return staraAdresa;
+            NotifyObservers();
+            return staraAdresa;
 		}
 
 		public Ocena? DeleteGrade(int id)
@@ -74,7 +101,8 @@ namespace CLI.DAO
 
             _grades.Remove(adr);
 			_storage.Save(_grades);
-			return adr;
+            NotifyObservers();
+            return adr;
 		}
 
 		public List<Ocena> GetAllAdresa()
