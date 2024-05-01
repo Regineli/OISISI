@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CLI.DAO
 {
-	internal class KatedraDAO
+	public class KatedraDAO
 	{
 		private readonly List<Katedra>? _adrese;
 		private readonly Storage<Katedra>? _storage;
@@ -33,10 +33,19 @@ namespace CLI.DAO
 			return adresa;
 		}
 
-		private Katedra? GetAdresaById(int id)
+		public Katedra? GetAdresaById(int id)
 		{
 			return _adrese.Find(v => v.ID == id);
 		}
+
+		public void PostaviSefaKatedre(int katedraID, Profesor profesor)
+		{
+			Katedra k = GetAdresaById(katedraID);
+			k.shef = profesor;
+			k.shefID = profesor.ID;
+			_storage.Save(_adrese);
+
+        }
 
 		public Katedra? UpdateVehicle(Katedra adresa)
 		{
@@ -47,7 +56,7 @@ namespace CLI.DAO
 			staraAdresa.naziv = adresa.naziv;
 			staraAdresa.shef = adresa.shef;
 			staraAdresa.profesori = adresa.profesori;
-			staraAdresa.katedraProfesori = adresa.katedraProfesori;
+			staraAdresa.ID = adresa.ID;
 			staraAdresa.shefID = adresa.shefID;
 
 

@@ -32,6 +32,7 @@ namespace GUI
         private readonly AdressController _addressController;
         private readonly StudentController _studentController;
         private readonly IndexController _indexController;
+        private readonly KatedraDAO _katedraDAO;
 
 
         public ObservableCollection<StudentDTO> Studenti { get; set; }
@@ -45,6 +46,10 @@ namespace GUI
 		public ObservableCollection<PredmetDTO> Predmeti { get; set; }
 		public PredmetDTO? SelectedPredmet { get; set; }
 		public PredmetDAO predmetDAO { get; set; }
+
+        public ObservableCollection<KatedraDTO> Katedre { get; set; }
+        public KatedraDTO SelectedKatedra { get; set; }
+        public KatedraDAO katedraDAO;
 
         public string trenutniTab;
 
@@ -71,6 +76,8 @@ namespace GUI
             Predmeti = new ObservableCollection<PredmetDTO>();
             predmetDAO = new PredmetDAO();
 
+            Katedre = new ObservableCollection<KatedraDTO>();
+            katedraDAO = new KatedraDAO();
 
             _studentController = new StudentController();
             _studentController.Subscribe(this);
@@ -103,6 +110,12 @@ namespace GUI
             foreach (Predmet p in predmetDAO.GetAllAdresa())
             {
                 Predmeti.Add(new PredmetDTO(p));
+            }
+
+            Katedre.Clear();
+            foreach(CLI.Katedra k in katedraDAO.GetAllAdresa())
+            {
+                Katedre.Add(new KatedraDTO(k));
             }
 
 
@@ -252,5 +265,17 @@ namespace GUI
             Datum.Content = DateTime.Now.ToString("dd.MM.yyyy");
         }
 
+        private void KatedraInfo_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedKatedra == null)
+            {
+                MessageBox.Show("Izaberite katedru");               
+            }
+            else
+            {
+                Dodatni.Katedra katedraInfo = new Dodatni.Katedra(SelectedKatedra.ID);
+                katedraInfo.ShowDialog();
+            }
+        }
     }
 }

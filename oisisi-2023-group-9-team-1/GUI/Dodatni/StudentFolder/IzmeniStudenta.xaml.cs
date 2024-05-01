@@ -46,6 +46,7 @@ namespace GUI.Dodatni
         public ObservableCollection<OcenaDTO> NepolozeniPredmeti { get; set; }
 
         public OcenaDTO? SelectedPolozenPredmet { get; set; }
+        public OcenaDTO? SelectedNepolozenPredmet { get; set; }
 
         public IzmeniStudenta(StudentDAO studentd, MainWindow mainWindow, int id, StudentController studentController, AdressController addressController, IndexController indexController)
         {
@@ -63,6 +64,8 @@ namespace GUI.Dodatni
             _studentController = studentController;
             _indexController = indexController;
             _gradeController = new GradeController();
+
+            PolozeniPredmeti = new ObservableCollection<OcenaDTO>();
 
             var student = _studentController.GetStudentByID(studentId);
             if (student != null)
@@ -213,7 +216,7 @@ namespace GUI.Dodatni
         
         public void Ucitaj()
         {                        
-            PolozeniPredmeti = new ObservableCollection<OcenaDTO>();
+            
             PolozeniPredmeti.Clear();
 
             foreach (Ocena ocena in _gradeController.GetPolozeniPredmetiByStudentID(studentId))
@@ -261,6 +264,20 @@ namespace GUI.Dodatni
             d.ShowDialog();
 
             Ucitaj();
+        }
+
+        private void UkloniPredmet_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedNepolozenPredmet == null)
+            {
+                MessageBox.Show("Odaberite predmet koji zelite da uklonite");
+            }
+            else
+            {
+                _gradeController.Obrisi(SelectedNepolozenPredmet.Id);
+
+                Ucitaj();
+            }
         }
     }
 }

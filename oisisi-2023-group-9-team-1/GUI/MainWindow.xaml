@@ -134,6 +134,25 @@
                 </Grid>
             </TabItem>
 
+            <TabItem Header="Katedra" Margin="55,-3,-59,1">
+
+
+                <Grid>
+                    <Button Content="Katedra Info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="20" Click="KatedraInfo_Click" Margin="10, 10, 0, 10"/>
+                    
+                    <DataGrid AutoGenerateColumns="False" Margin="0, 40, 0, 0"
+                        x:Name="GridKatedra"
+                        ItemsSource="{Binding Katedre, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedKatedra, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" IsReadOnly="True">                                 
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Naziv" Binding="{Binding Naziv}"/>
+                            <DataGridTextColumn Width="*" Header="Sifra" Binding="{Binding Sifra}"/>
+                            <DataGridTextColumn Width="*" Header="Sef Katedre" Binding="{Binding ImeShefa}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
         </TabControl>
 
         

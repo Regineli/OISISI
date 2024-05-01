@@ -37,6 +37,19 @@ namespace GUI.DTO
             }
         }
 
+        public string _celoIme;
+        public string CeloIme
+        {
+            get
+            {
+                if(Ime != "" && Ime != null)
+                {
+                    return Ime + " " + Prezime;
+                }
+                return "nan";
+            }
+        }
+
         public string Ime
         {
             get { return ime; }

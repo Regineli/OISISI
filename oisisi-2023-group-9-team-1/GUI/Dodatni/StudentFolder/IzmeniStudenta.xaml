@@ -105,6 +105,7 @@
                 <Grid>
                     <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400">
                         <Button Content="Dodaj Predmet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="20" Click="DodajPredmet" Margin="10, 0, 0, 10"/>
+                        <Button Content="Ukloni Predmet" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Click="UkloniPredmet_Click" Margin="10, 0, 0, 10"/>
 
                         <DataGrid AutoGenerateColumns="False" x:Name="DataGridNepolozeni" Height="300"
                 ItemsSource="{Binding NepolozeniPredmeti, UpdateSourceTrigger=PropertyChanged}"

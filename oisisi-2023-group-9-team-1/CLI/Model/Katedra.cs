@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Xml.Linq;
+using CLI.DAO;
 using CLI.Model;
 using CLI.Serialization;
 using CLI.Storage;
@@ -12,21 +13,24 @@ namespace CLI
         public string sifra { get; set; }
         public string naziv { get; set; }
 		public Profesor shef { get; set; }
+
         public List<Profesor> profesori { get; set; }
 		public int katedraProfesoriID { get; set; }
         public KatedraProfesori katedraProfesori { get; set; }
         public int ID { get; set; }
 
+        public ProfesorDAO _profesorDAO;
+
         public int shefID { get; set; }  // SefID je ID od profesora koji je sef
 
         public Katedra()
         {
-            shefID = -1;
             profesori = new List<Profesor>();
             KatedraProfesori kP = new KatedraProfesori();
             katedraProfesori = kP;
             katedraProfesoriID = kP.GetID();
 			ID = new Random().Next();
+            _profesorDAO = new ProfesorDAO();
 		}
 
         public Katedra(string s, string n, Profesor sh)
@@ -39,14 +43,15 @@ namespace CLI
             katedraProfesori = kP;
             katedraProfesoriID = kP.GetID();
 			ID = new Random().Next();
-		}
+            _profesorDAO = new ProfesorDAO();
+        }
 
         public Katedra(string s, string n)
         {
-			
-			sifra = s;
+            _profesorDAO = new ProfesorDAO();
+            sifra = s;
             naziv = n;
-            shefID = -1;
+
             KatedraProfesori kP = new KatedraProfesori();
             katedraProfesori = kP;
             katedraProfesoriID = kP.GetID();    // Pravim poveznicu katedru sa profesorima i storujem ID
@@ -62,7 +67,7 @@ namespace CLI
         public void dodajProfesora(Profesor pr)
         {
             List<KatedraProfesori> katedreP = new List<KatedraProfesori>();
-
+                
             Storage<KatedraProfesori> katedraStorageP = new Storage<KatedraProfesori>("katedraProfesori.txt");
 
             foreach (KatedraProfesori kP in katedreP)
@@ -129,7 +134,7 @@ namespace CLI
             sifra,
             naziv,
             shefID.ToString(),
-            katedraProfesoriID.ToString(),            
+            ID.ToString(), 
             };
             return csvValues;
         }
@@ -138,8 +143,15 @@ namespace CLI
         {
             sifra = values[0];
             naziv = values[1];
-            shefID = int.Parse(values[2]);
-            katedraProfesoriID = int.Parse(values[3]);
+            if (values[2] != null && values[2] != "")
+            {
+                shefID = int.Parse(values[2]);
+                shef = _profesorDAO.GetAdresaById(shefID);
+            }
+                
+            ID = int.Parse(values[3]);
+
+            
         }
 
         public override string ToString()

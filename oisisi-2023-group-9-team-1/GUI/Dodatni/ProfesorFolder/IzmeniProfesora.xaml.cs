@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using CLI.Observer;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using GUI.Dodatni.ProfesorFolder;
 
 namespace GUI.Dodatni
 {
@@ -158,6 +159,28 @@ namespace GUI.Dodatni
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void DodajPredmet_Click(object sender, RoutedEventArgs e)
+        {
+            DodajPredmetProfesoru pr = new DodajPredmetProfesoru(profesorId);
+            pr.ShowDialog();
+
+            Ucitaj();
+        }
+
+        private void UkloniPredmet_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedProfesorPredmet == null)
+            {
+                MessageBox.Show("Odaberite predmet koji zelite da uklonite");
+            }
+            else
+            {
+                _PPController.UkloniPredmet(SelectedProfesorPredmet.ID, profesorId);
+
+                Ucitaj();
+            }
         }
     }
 }

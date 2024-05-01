@@ -36,6 +36,18 @@ namespace CLI.Model
             this.predmet = predmet;
             this.profesorID = prof.ID;
             this.predmetID = predmet.ID;
+            _profesorDAO = new ProfesorDAO();
+            _predmetController = new PredmetController();
+        }
+
+        public ProfesorPredmetNew(int profID, int predmetID)
+        {
+            _profesorDAO = new ProfesorDAO();
+            _predmetController = new PredmetController();
+            this.profesor = _profesorDAO.GetAdresaById(profID);
+            this.predmet = _predmetController.GetAdressByID(predmetID);
+            this.profesorID = profID;
+            this.predmetID = predmetID;
         }
 
         public string[] ToCSV()
