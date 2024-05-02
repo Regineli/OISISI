@@ -54,6 +54,9 @@ namespace CLI.Model
             profesorID = int.Parse(values[0]);
             katedraID = int.Parse(values[1]);
             ID = int.Parse(values[2]);
+
+            katedra = _katedraDAO.GetAdresaById(katedraID);
+            profesor = _profesorDAO.GetAdresaById(profesorID);
         }
     }
 }

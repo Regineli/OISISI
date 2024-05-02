@@ -21,6 +21,7 @@ using CLI.DAO;
 using System.ComponentModel;
 using CLI.Controller;
 using CLI.Observer;
+using GUI.Dodatni.KatedraFolder;
 
 namespace GUI
 {
@@ -273,7 +274,7 @@ namespace GUI
             }
             else
             {
-                Dodatni.Katedra katedraInfo = new Dodatni.Katedra(SelectedKatedra.ID);
+                KatedraInfoNew katedraInfo = new KatedraInfoNew(SelectedKatedra.ID);
                 katedraInfo.ShowDialog();
             }
         }

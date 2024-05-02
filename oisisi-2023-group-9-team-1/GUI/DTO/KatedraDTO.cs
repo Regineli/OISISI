@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GUI.DTO
 {
-    public class KatedraDTO
+    public class KatedraDTO : INotifyPropertyChanged
     {
         public int _id;
 

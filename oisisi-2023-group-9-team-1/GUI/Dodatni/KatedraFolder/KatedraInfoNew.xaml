@@ -1,14 +1,14 @@
-﻿<Window x:Class="GUI.Dodatni.Katedra"
+﻿<Window x:Class="GUI.Dodatni.KatedraFolder.KatedraInfoNew"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GUI.Dodatni"
+        xmlns:local="clr-namespace:GUI.Dodatni.KatedraFolder"
         mc:Ignorable="d"
-        Title="Katedra" Height="450" Width="800">
+            Title="Katedra Info" Height="700" Width="400">
     <Grid>
         <Grid>
-            <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="400">
+            <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="600">
                 <Button Content="Dodaj Profesora" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="20" Click="DodajProfesora_Click" Margin="10, 0, 0, 10"/>
                 <Button Content="Stavi Sefa Katedre" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Click="SefKatedre_Click" Margin="10, 0, 0, 10"/>
 
@@ -24,15 +24,17 @@
 
                     <Label  Grid.Row="0" Grid.Column="0" Height="30">Sifra</Label>
                     <Label  Grid.Row="1" Grid.Column="0" Height="30">Naziv</Label>
-                    
-                    <TextBox x:Name='sifra' Grid.Row="0" Grid.Column="1"  Height="20"></TextBox>
-                    <TextBox x:Name='naziv' Grid.Row="1" Grid.Column="1" Height="20"></TextBox>
-                </Grid>
 
-                <DataGrid AutoGenerateColumns="False" x:Name="DataGridNepolozeni" Height="300"
-                    ItemsSource="{Binding ProfesoriKatedre, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding SelectedProfesorKatedre, UpdateSourceTrigger=PropertyChanged}"
-                    SelectionMode="Single" IsReadOnly="True">   
+                    <TextBox x:Name='sifra' Grid.Row="0" Grid.Column="1"  Height="20" IsEnabled="false" Text="{Binding SifraTextBox, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBox x:Name='naziv' Grid.Row="1" Grid.Column="1" Height="20" IsEnabled="false" Text="{Binding NazivTextBox, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+                </Grid>
+                <Label Height="30" Margin="0,0,0,227">Profesor na katedri</Label>
+                
+                <DataGrid AutoGenerateColumns="False" x:Name="DataGridProfesoriKatedre" 
+                ItemsSource="{Binding ProfKatedre, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding SelectedProfesorKatedre, UpdateSourceTrigger=PropertyChanged}"
+                SelectionMode="Single" IsReadOnly="True" Margin="0,206,0,94">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding Ime}" />
                         <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding Prezime}" />

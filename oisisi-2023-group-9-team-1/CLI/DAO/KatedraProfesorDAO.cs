@@ -35,6 +35,7 @@ namespace CLI.DAO
 
         public void AddNEW(KatedraProfesor o)
         {
+            o.ID = GenerateId();
             _katedraProf.Add(o);
             _storage.Save(_katedraProf);
             NotifyObservers();

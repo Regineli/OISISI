@@ -77,9 +77,9 @@ namespace GUI.Dodatni
             s.AddIndeks(ind);
 
             _studentController.AddStudent(s);
-            MainWindow main = new MainWindow();
-            main.Show();
-            Close();
+            //MainWindow main = new MainWindow();
+            //main.Show();
+            //Close();
         }
 
 
