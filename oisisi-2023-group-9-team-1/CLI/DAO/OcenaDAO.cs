@@ -40,9 +40,15 @@ namespace CLI.DAO
 		
 		public void AddGrade(Ocena o)
 		{
+			o.ID = GenerateId();
 			_grades.Add(o);
 			_storage.Save(_grades);
             NotifyObservers();
+		}
+
+		public List<Ocena> GetOcenePredmeta(Predmet p)
+		{
+			return _grades.FindAll(v=>v.PredmetID == p.ID);
 		}
 
         public Ocena AddGrade(Student student, Predmet predmet, int ocena, DateOnly datum)

@@ -1,0 +1,83 @@
+﻿<Window x:Class="GUI.Dodatni.IzmeniPredmet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI.Dodatni"
+        mc:Ignorable="d"
+         WindowStartupLocation="CenterScreen"
+        Title="IzmeniPredmet" Height="600" Width="400">
+    <Grid>
+        <TabControl>
+
+            <!--Predmet izmeni tab-->
+
+
+            <TabItem Header="Izmeni">
+                <Grid>
+                    <Grid Grid.Row="0" Grid.Column="0" Width="300" Height="450">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label  Grid.Row="0" Grid.Column="0" Height="30">Sifra Predmeta</Label>
+                        <Label  Grid.Row="1" Grid.Column="0" Height="30">Naziv</Label>
+                        <Label Grid.Row="2" Grid.Column="0" Height="30">ESPB</Label>
+                        <Label  Grid.Row="3" Grid.Column="0" Height="30">Semestar</Label>
+                        <Label  Grid.Row="4" Grid.Column="0" Height="30">Godina Studija</Label>
+
+                        <TextBox x:Name='Tb1' Grid.Row="0" Grid.Column="1"  Height="20"></TextBox>
+                        <TextBox x:Name='Tb2' Grid.Row="1" Grid.Column="1" Height="20"></TextBox>
+                        <TextBox x:Name='Tb3' Grid.Row="2" Grid.Column="1"  Height="20"></TextBox>
+
+                        <ComboBox Name="ComboBoxSemestar"  Grid.Row="3" Grid.Column="1" Height="20">
+                            <ComboBoxItem>Letnji</ComboBoxItem>
+                            <ComboBoxItem>Zimski</ComboBoxItem>
+                        </ComboBox>
+
+                        <ComboBox Name="ComboBoxGodStudija"  Grid.Row="4" Grid.Column="1" Height="20">
+                            <ComboBoxItem>1</ComboBoxItem>
+                            <ComboBoxItem>2</ComboBoxItem>
+                            <ComboBoxItem>3</ComboBoxItem>
+                            <ComboBoxItem>4</ComboBoxItem>
+                        </ComboBox>
+
+                    </Grid>
+                    <DockPanel Width="450" Height="40" VerticalAlignment="Bottom">
+                        <Button Content="Potvrdi" IsCancel="True" HorizontalAlignment="Center" Margin="120,0,0,0" VerticalAlignment="Center" Width="60" Click="Potvrdi_Click"/>
+                        <Button Content="Odustani" IsDefault="True"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Click="Close_Click"/>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Student Uslov Predmet">
+                <Grid>
+                    <Button Content="Student Slusa Oba Predmeta" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="20" Click="StudentSlusaOba_Click" Margin="10, 10, 0, 10"/>
+
+
+                    <DataGrid AutoGenerateColumns="False"
+                        x:Name="GridPredmet" Margin="0, 40, 0, 0"
+                        ItemsSource="{Binding Predmeti, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedPredmet, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="232" Header="Naziv" Binding="{Binding Naziv}"/>
+                            <DataGridTextColumn Width="232" Header="ESPB" Binding="{Binding ESPB}"/>
+                            <DataGridTextColumn Width="232" Header="Semestar" Binding="{Binding Semestar}"/>
+                            <DataGridTextColumn Width="232" Header="Sifra" Binding="{Binding SifraPredmeta}"/>
+                            <DataGridTextColumn Width="232" Header="Godina Izvodjenja" Binding="{Binding GodStudijaIzvodjenja}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

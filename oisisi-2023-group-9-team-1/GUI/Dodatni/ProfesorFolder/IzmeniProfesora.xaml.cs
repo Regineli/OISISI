@@ -42,6 +42,12 @@ namespace GUI.Dodatni
         public ObservableCollection<PredmetDTO> ProfesorPredmeti { get; set; }
         public PredmetDTO SelectedProfesorPredmet { get; set; }
 
+        public ObservableCollection<StudentDTO> StudentiProfesora { get; set; }
+        public StudentController _studentController { get; set; }
+
+        public OcenaDAO _ocenaDAO { get; set; }
+        public List<int> studentiProfesoraIDs { get; set; }
+
         public IzmeniProfesora(ProfesorDAO profesoriDAO, MainWindow mainWindow, int profesorId)
         {
             InitializeComponent();
@@ -49,6 +55,13 @@ namespace GUI.Dodatni
             this.profesoriDAO = profesoriDAO;
             this.mainWindow = mainWindow;
             this.profesorId = profesorId;
+
+            _ocenaDAO = new OcenaDAO();
+            studentiProfesoraIDs = new List<int>();
+
+            _studentController = new StudentController();
+            StudentiProfesora = new ObservableCollection<StudentDTO>();
+
             _addressController = new AdressController();
             AdressDTO = new AdresaDTO();
 
@@ -144,14 +157,38 @@ namespace GUI.Dodatni
 
         // PREDMETI TAB
 
+        public void DodajStudentaProfesoruGrid(Predmet p)
+        {
+            List<Ocena> ocenePredmeta = _ocenaDAO.GetOcenePredmeta(p);
+
+            foreach(Ocena o in ocenePredmeta)
+            {
+                if(!studentiProfesoraIDs.Contains(o.studentPolozio.ID))
+                {
+                    StudentiProfesora.Add(new StudentDTO(o.studentPolozio));
+                    studentiProfesoraIDs.Add(o.studentPolozio.ID);
+                }
+            }
+        }
+
         public void Ucitaj()
         {
+            StudentiProfesora.Clear();
             ProfesorPredmeti.Clear();
             foreach (Predmet p in _PPController.GetPredmetiByProfesorID(profesorId))
             {
                 ProfesorPredmeti.Add(new PredmetDTO(p));
+                DodajStudentaProfesoruGrid(p);
             }
             OnPropertyChanged("ProfesorPredmeti");
+            OnPropertyChanged("StudentiProfesora");
+
+
+            
+            // Ocena -> Student, Predmet
+            // ProfesorPredmetNEW -> Profesor, Predmet
+            // Profesor -> Predmeti, Predmet->Ocena, Ocena->Student
+            // Dodati uslov da se ne ponavlja isti student
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

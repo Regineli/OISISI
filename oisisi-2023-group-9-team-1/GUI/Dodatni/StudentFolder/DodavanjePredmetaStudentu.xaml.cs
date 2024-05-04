@@ -35,11 +35,11 @@ namespace GUI.Dodatni.Student
 
         public int studentID { get; set; }
 
-
         public DodavanjePredmetaStudentu(int studentId)
         {
             InitializeComponent();
             DataContext = this;
+
             
 
             this.studentID = studentId;

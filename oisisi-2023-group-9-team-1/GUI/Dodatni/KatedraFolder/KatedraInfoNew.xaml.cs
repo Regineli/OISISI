@@ -39,8 +39,11 @@ namespace GUI.Dodatni.KatedraFolder
         public string SifraTextBox { get; set; }
         public string NazivTextBox { get; set; }
 
-        public KatedraInfoNew(int katedraID)
+        public MainWindow mainWindow;
+
+        public KatedraInfoNew(int katedraID, MainWindow mainWindow)
         {
+            this.mainWindow = mainWindow;
             InitializeComponent();
             DataContext = this;
 
@@ -92,6 +95,7 @@ namespace GUI.Dodatni.KatedraFolder
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            mainWindow.Ucitaj();
             this.Close();
         }
 

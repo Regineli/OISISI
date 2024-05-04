@@ -274,7 +274,8 @@ namespace GUI
             }
             else
             {
-                KatedraInfoNew katedraInfo = new KatedraInfoNew(SelectedKatedra.ID);
+                KatedraInfoNew katedraInfo = new KatedraInfoNew(SelectedKatedra.ID, this);
+                
                 katedraInfo.ShowDialog();
             }
         }

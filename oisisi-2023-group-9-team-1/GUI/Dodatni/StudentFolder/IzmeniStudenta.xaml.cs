@@ -63,9 +63,10 @@ namespace GUI.Dodatni
             _addressController = addressController;
             _studentController = studentController;
             _indexController = indexController;
-            _gradeController = new GradeController();
+            
 
             PolozeniPredmeti = new ObservableCollection<OcenaDTO>();
+            NepolozeniPredmeti = new ObservableCollection<OcenaDTO>();
 
             var student = _studentController.GetStudentByID(studentId);
             if (student != null)
@@ -215,8 +216,8 @@ namespace GUI.Dodatni
 
         
         public void Ucitaj()
-        {                        
-            
+        {
+            _gradeController = new GradeController();
             PolozeniPredmeti.Clear();
 
             foreach (Ocena ocena in _gradeController.GetPolozeniPredmetiByStudentID(studentId))
@@ -226,7 +227,7 @@ namespace GUI.Dodatni
 
             OnPropertyChanged("PolozeniPredmeti");
 
-            NepolozeniPredmeti = new ObservableCollection<OcenaDTO>();
+            
             NepolozeniPredmeti.Clear();
 
             foreach (Ocena ocena in _gradeController.GetNepolozeniPredmetiByStudentID(studentId))
@@ -261,8 +262,9 @@ namespace GUI.Dodatni
         {
             
             DodavanjePredmetaStudentu d = new DodavanjePredmetaStudentu(studentId);
+            d.Closed += (s, args) => Ucitaj();
             d.ShowDialog();
-
+            
             Ucitaj();
         }
 
