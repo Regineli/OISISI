@@ -4,6 +4,7 @@ using CLI.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,8 +38,7 @@ namespace CLI.DAO
             return _grades.FindAll(v => v.ocena == 5 && v.StudentID == id);
         }
 
-		
-		public void AddGrade(Ocena o)
+        public void AddGrade(Ocena o)
 		{
 			o.ID = GenerateId();
 			_grades.Add(o);
@@ -46,7 +46,27 @@ namespace CLI.DAO
             NotifyObservers();
 		}
 
-		public List<Ocena> GetOcenePredmeta(Predmet p)
+        public List<Ocena>? GetStudentiPoloziliPredmet(int predmetID)
+        {
+            return _grades.FindAll(v => v.ocena != 5 && v.PredmetID == predmetID);
+        }
+
+        public bool StudentNijePolozioPredmet(int studentID, int predmetID)
+        {
+            return _grades.Find(v => v.PredmetID == predmetID && v.StudentID == studentID).ocena ==5;
+        }
+
+        public bool StudentSlusaPredmet(int studentID, int predmetID)
+		{
+            return _grades.Find(v => v.PredmetID == predmetID && v.StudentID==studentID) != null;
+        }
+
+        public List<Ocena> GetOceneByPredmetID(int pID)
+        {
+            return _grades.FindAll(v => v.PredmetID == pID);
+        }
+
+        public List<Ocena> GetOcenePredmeta(Predmet p)
 		{
 			return _grades.FindAll(v=>v.PredmetID == p.ID);
 		}

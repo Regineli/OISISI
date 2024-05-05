@@ -1,6 +1,6 @@
 ﻿using CLI.Controller;
-using CLI;
 using GUI.DTO;
+using CLI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CLI.DAO;
 using CLI.Model;
+using static CLI.Predmet;
 
 namespace GUI.Dodatni.ProfesorFolder
 {
@@ -53,7 +54,7 @@ namespace GUI.Dodatni.ProfesorFolder
             Ucitaj();
         }
 
-        public List<Predmet> UcitajPredmeteKojeProfesorNema()
+        public List<CLI.Predmet> UcitajPredmeteKojeProfesorNema()
         {
             List<ProfesorPredmetNew> predmetiProfesora = _PPController.GetByProfesorID(profesorID);
             List<int> predmetIDs = new List<int>();
@@ -62,9 +63,9 @@ namespace GUI.Dodatni.ProfesorFolder
                 predmetIDs.Add(o.predmetID);
             }
 
-            List<Predmet> predmeti = new List<Predmet>();
+            List<CLI.Predmet> predmeti = new List<CLI.Predmet>();
 
-            foreach (Predmet p in _predmetController.GetAllAdresses())
+            foreach (CLI.Predmet p in _predmetController.GetAllAdresses())
             {
                 if (!predmetIDs.Contains(p.ID))
                 {
@@ -80,7 +81,7 @@ namespace GUI.Dodatni.ProfesorFolder
             Predmeti = new ObservableCollection<PredmetDTO>();
             Predmeti.Clear();
 
-            foreach (Predmet predmet in UcitajPredmeteKojeProfesorNema())
+            foreach (CLI.Predmet predmet in UcitajPredmeteKojeProfesorNema())
             {
                 Predmeti.Add(new PredmetDTO(predmet));
             }

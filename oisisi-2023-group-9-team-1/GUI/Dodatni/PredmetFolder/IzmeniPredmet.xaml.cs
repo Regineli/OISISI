@@ -39,6 +39,7 @@ namespace GUI.Dodatni
         public IzmeniPredmet(PredmetDAO predmetiiDAO, MainWindow mainWindow, int predmetId) 
         {
             InitializeComponent();
+            DataContext = this;
             this.predmetiDAO = predmetiiDAO;
             this.mainWindow = mainWindow;
             this.predmetId = predmetId;
@@ -56,7 +57,7 @@ namespace GUI.Dodatni
             }
 
             
-            Predmet predmet = predmetiDAO.GetAdresaById(predmetId);
+            CLI.Predmet predmet = predmetiDAO.GetAdresaById(predmetId);
             if (predmet != null)
             {
 
@@ -78,7 +79,7 @@ namespace GUI.Dodatni
         public void Ucitaj()
         {
             Predmeti.Clear();
-            foreach (Predmet p in predmetiDAO.GetAllAdresa())
+            foreach (CLI.Predmet p in predmetiDAO.GetAllAdresa())
             {
                 Predmeti.Add(new PredmetDTO(p));
             }
@@ -87,7 +88,7 @@ namespace GUI.Dodatni
         private void Potvrdi_Click(object sender, RoutedEventArgs e)
         {
             
-            Predmet predmet = predmetiDAO.GetAdresaById(predmetId);
+            CLI.Predmet predmet = predmetiDAO.GetAdresaById(predmetId);
             if (predmet != null)
             {
                 try
@@ -135,12 +136,57 @@ namespace GUI.Dodatni
             }
             else
             {
-                _student
+                List<StudentDTO> studenti = new List<StudentDTO>();
+                List<int> studentIds = new List<int>();
 
+                foreach(Ocena o in _gradeController.GetPredmetGrades(SelectedPredmet.ID)) //svi koji slusaju jedan predmet, ima duplikata studenta
+                {                                                                    // ako student slusa i drugi predmet i nije u listi dodaj ga
+                    if (_gradeController.StudentSlusaPredmet(o.StudentID, predmetId) && !(studentIds.Contains(o.StudentID)))    
+                    {
+                        studenti.Add(new StudentDTO(o.studentPolozio));
+                        studentIds.Add(o.StudentID);
+                    }
+                }
 
-
-                PrikazStudenata pstud = new PrikazStudenata();
+                PrikazStudenata pstud = new PrikazStudenata(studenti);
+                pstud.ShowDialog();
             }
+        }
+
+        private void StudentPolozeioPrvi_Click(object sender, RoutedEventArgs e)
+        {
+            List<StudentDTO> studenti = new List<StudentDTO>();
+            List<int> studentIds = new List<int>();
+
+            foreach (Ocena o in _gradeController.GetStudentiPoloziliPredmet(predmetId)) //svi koji su polozili prvi
+            {                                                                    // ako student slusa i drugi predmet i nije u listi dodaj ga
+                if (_gradeController.StudentNijePolozioPredmet(o.StudentID, SelectedPredmet.ID) && !(studentIds.Contains(o.StudentID)))
+                {
+                    studenti.Add(new StudentDTO(o.studentPolozio));
+                    studentIds.Add(o.StudentID);
+                }
+            }
+
+            PrikazStudenata pstud = new PrikazStudenata(studenti);
+            pstud.ShowDialog();
+        }
+
+        private void StudentPolozioDrugi_Click(object sender, RoutedEventArgs e)
+        {
+            List<StudentDTO> studenti = new List<StudentDTO>();
+            List<int> studentIds = new List<int>();
+
+            foreach (Ocena o in _gradeController.GetStudentiPoloziliPredmet(SelectedPredmet.ID)) //svi koji su polozili drugi
+            {                                                                    // ako student slusa i drugi predmet i nije u listi dodaj ga
+                if (_gradeController.StudentNijePolozioPredmet(o.StudentID, predmetId) && !(studentIds.Contains(o.StudentID)))
+                {
+                    studenti.Add(new StudentDTO(o.studentPolozio));
+                    studentIds.Add(o.StudentID);
+                }
+            }
+
+            PrikazStudenata pstud = new PrikazStudenata(studenti);
+            pstud.ShowDialog();
         }
     }
 }

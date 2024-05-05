@@ -157,7 +157,7 @@ namespace GUI.Dodatni
 
         // PREDMETI TAB
 
-        public void DodajStudentaProfesoruGrid(Predmet p)
+        public void DodajStudentaProfesoruGrid(CLI.Predmet p)
         {
             List<Ocena> ocenePredmeta = _ocenaDAO.GetOcenePredmeta(p);
 
@@ -175,7 +175,7 @@ namespace GUI.Dodatni
         {
             StudentiProfesora.Clear();
             ProfesorPredmeti.Clear();
-            foreach (Predmet p in _PPController.GetPredmetiByProfesorID(profesorId))
+            foreach (CLI.Predmet p in _PPController.GetPredmetiByProfesorID(profesorId))
             {
                 ProfesorPredmeti.Add(new PredmetDTO(p));
                 DodajStudentaProfesoruGrid(p);

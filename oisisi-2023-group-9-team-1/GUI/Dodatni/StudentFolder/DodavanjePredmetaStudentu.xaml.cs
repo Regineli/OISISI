@@ -53,7 +53,7 @@ namespace GUI.Dodatni.Student
             
         }
 
-        public List<Predmet> UcitajPredmeteKojeStudentNema() {
+        public List<CLI.Predmet> UcitajPredmeteKojeStudentNema() {
             List<Ocena> oceneStudenta = _gradeController.GetGradesByStudentID(studentID);
             List<int> predmetIDs = new List<int>();
             foreach (Ocena o in oceneStudenta)
@@ -61,9 +61,9 @@ namespace GUI.Dodatni.Student
                 predmetIDs.Add(o.PredmetID);
             }
 
-            List<Predmet> predmeti = new List<Predmet>();
+            List<CLI.Predmet> predmeti = new List<CLI.Predmet>();
 
-            foreach (Predmet p in _predmetController.GetAllAdresses())
+            foreach (CLI.Predmet p in _predmetController.GetAllAdresses())
             {
                 if (!predmetIDs.Contains(p.ID))
                 {
@@ -79,7 +79,7 @@ namespace GUI.Dodatni.Student
             Predmeti = new ObservableCollection<PredmetDTO>();
             Predmeti.Clear();                    
 
-            foreach (Predmet predmet in UcitajPredmeteKojeStudentNema())
+            foreach (CLI.Predmet predmet in UcitajPredmeteKojeStudentNema())
             {
                 Predmeti.Add(new PredmetDTO(predmet));
             }

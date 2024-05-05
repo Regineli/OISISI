@@ -23,9 +23,31 @@ namespace CLI.Controller
             return _grades.GetAllAdresa();
         }
 
+        public bool StudentSlusaPredmet(int studentID, int predmetID)
+        {
+            return _grades.StudentSlusaPredmet(studentID, predmetID);
+        }
+
+        public List<Ocena>? GetStudentiPoloziliPredmet(int predmetID)
+        {
+            return _grades.GetStudentiPoloziliPredmet(predmetID);
+        }
+
+        public bool StudentNijePolozioPredmet(int studentID, int predmetId)
+        {
+            return _grades.StudentNijePolozioPredmet(studentID, predmetId);
+        }
+
+
+
         public void AddGrade(Ocena grade)
         {
             _grades.AddGrade(grade);
+        }
+
+        public List<Ocena> GetPredmetGrades(int pid)
+        {
+            return _grades.GetOceneByPredmetID(pid);
         }
 
         public Ocena AddGrade(Student student, Predmet predmet, int ocena, DateOnly datum)
