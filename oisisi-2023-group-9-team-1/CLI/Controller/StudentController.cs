@@ -17,6 +17,21 @@ namespace CLI.Controller
             _students = new StudentDAO();
         }
 
+        public List<Student> SearchStudentByThreeWords(string lastName, string firstName, string index)
+        {
+            return _students.SearchStudentByThreeWords(lastName, firstName, index);
+        }
+
+        public List<Student> SearchStudentByLastAndFirstName(string lastName, string firstName)
+        {
+            return _students.SearchStudentByLastAndFirstName(lastName, firstName);
+        }
+
+        public List<Student> SearchStudentByLastName(string lastName)
+        {
+            return _students.SearchStudentByLastName(lastName);
+        }
+
         public List<Student> GetAllStudents()
         {
             return _students.GetAllStudents();

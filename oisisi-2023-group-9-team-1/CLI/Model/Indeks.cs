@@ -65,7 +65,7 @@ namespace CLI
 
         public string ToOneLineString()
         {
-            return oznakaSmera + " " + brUpisa.ToString() + "/" + godinaUpisa.ToString();
+            return oznakaSmera + "-" + brUpisa.ToString() + "-" + godinaUpisa.ToString();
         }
     }
 }

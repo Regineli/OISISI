@@ -93,6 +93,44 @@ namespace GUI
 
         }
 
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            string searchText = SearchTextBox.Text;
+            string[] searchWords = searchText.Split(",");
+
+            if (searchWords.Length == 1)     // gleda samo prezime
+            {
+                List<Student> searchStudenti = _studentController.SearchStudentByLastName(searchWords[0]);
+                Studenti.Clear();
+                foreach (Student student in searchStudenti)
+                {
+                    Studenti.Add(new StudentDTO(student));
+                }
+            } 
+            else if(searchWords.Length == 2)
+            {
+                List<Student> searchStudenti = _studentController.SearchStudentByLastAndFirstName(searchWords[0], searchWords[1]);
+                Studenti.Clear();
+                foreach (Student student in searchStudenti)
+                {
+                    Studenti.Add(new StudentDTO(student));
+                }
+            }
+            else if(searchWords.Length == 3)
+            {
+                List<Student> searchStudenti = _studentController.SearchStudentByThreeWords(searchWords[2], searchWords[1], searchWords[0]);
+                Studenti.Clear();
+                foreach (Student student in searchStudenti)
+                {
+                    Studenti.Add(new StudentDTO(student));
+                }
+            }
+            else
+            {
+                MessageBox.Show("You can have maximum of 3 words for search");
+            }
+        }
+
         public void Ucitaj()
         {
             Studenti.Clear();

@@ -29,7 +29,39 @@ namespace CLI.DAO
 			return _students[^1].ID + 1;
 		}
 
-		public Student AddStudent(Student st)
+        public List<Student> SearchStudentByThreeWords(string lastName, string firstName, string index)
+        {
+            if (string.IsNullOrEmpty(lastName))
+            {
+                return GetAllStudents();
+            }
+
+            return _students.FindAll(v => v.prezime.IndexOf(lastName, StringComparison.OrdinalIgnoreCase) >= 0 
+                                    && v.ime.IndexOf(firstName, StringComparison.OrdinalIgnoreCase) >= 0
+                                    && v.index.ToOneLineString().IndexOf(index, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        public List<Student> SearchStudentByLastAndFirstName(string lastName, string firstName)
+        {
+            if (string.IsNullOrEmpty(lastName))
+            {
+                return GetAllStudents();
+            }
+
+            return _students.FindAll(v => v.prezime.IndexOf(lastName, StringComparison.OrdinalIgnoreCase) >= 0 && v.ime.IndexOf(firstName, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        public List<Student> SearchStudentByLastName(string lastName)
+        {
+            if (string.IsNullOrEmpty(lastName))
+            {
+                return GetAllStudents();
+            }
+
+            return _students.FindAll(v => v.prezime.IndexOf(lastName, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        public Student AddStudent(Student st)
 		{
 			st.ID = GenerateId();
             _students.Add(st);
